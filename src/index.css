@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geist+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: Outfit, sans-serif;
+    --font-serif: Playfair Display, serif;
+    --font-mono: Geist Mono, ui-monospace, monospace;
+    --background: oklch(0.9818 0.0054 95.0986);
+    --foreground: oklch(0.3438 0.0269 95.7226);
+    --card: oklch(0.9665 0.0067 97.3521);
+    --card-foreground: oklch(0.1908 0.0020 106.5859);
+    --primary: oklch(0.6171 0.1375 39.0427);
+    --primary-foreground: oklch(1.0000 0 0);
+    --secondary: oklch(0.9245 0.0138 92.9892);
+    --secondary-foreground: oklch(0.4334 0.0177 98.6048);
+    --muted: oklch(0.9341 0.0153 90.2390);
+    --muted-foreground: oklch(0.5341 0.0078 97.4503);
+    --accent: oklch(0.9245 0.0138 92.9892);
+    --accent-foreground: oklch(0.2671 0.0196 98.9390);
+    --border: oklch(0.8847 0.0069 97.3627);
+    --input: oklch(0.7621 0.0156 98.3528);
+    --ring: oklch(0.6171 0.1375 39.0427);
+    --radius: 1rem;
+  }
+
+  .dark {
+    --font-sans: Outfit, sans-serif;
+    --font-serif: Playfair Display, serif;
+    --font-mono: Geist Mono, ui-monospace, monospace;
+    --background: oklch(0.2679 0.0036 106.6427);
+    --foreground: oklch(0.9576 0.0027 106.4494);
+    --card: oklch(0.2928 0.0018 106.5092);
+    --card-foreground: oklch(0.9818 0.0054 95.0986);
+    --primary: oklch(0.6724 0.1308 38.7559);
+    --primary-foreground: oklch(0.1908 0.0020 106.5859);
+    --muted: oklch(0.2213 0.0038 106.7070);
+    --muted-foreground: oklch(0.7713 0.0169 99.0657);
+    --border: oklch(0.3618 0.0101 106.8928);
+    --input: oklch(0.4336 0.0113 100.2195);
+    --ring: oklch(0.6724 0.1308 38.7559);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--background);
+    color: var(--foreground);
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  .font-display {
+    font-family: var(--font-serif);
+  }
+}
+
+@layer components {
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .article-content {
+    @apply prose prose-lg max-w-none;
+    color: var(--foreground);
+  }
+
+  .article-content h1 {
+    font-family: var(--font-serif);
+    @apply text-3xl font-bold mb-6 mt-10;
+    color: var(--foreground);
+  }
+
+  .article-content h2 {
+    font-family: var(--font-serif);
+    @apply text-2xl font-bold mb-4 mt-8;
+    color: var(--foreground);
+  }
+
+  .article-content h3 {
+    font-family: var(--font-serif);
+    @apply text-xl font-bold mb-3 mt-6;
+    color: var(--foreground);
+  }
+
+  .article-content p {
+    @apply leading-relaxed mb-4;
+    color: var(--muted-foreground);
+  }
+
+  .article-content ul,
+  .article-content ol {
+    @apply my-4 ml-6;
+  }
+
+  .article-content li {
+    @apply mb-2;
+    color: var(--muted-foreground);
+  }
+
+  .article-content blockquote {
+    @apply border-l-4 pl-4 italic my-6 rounded-r-lg py-2;
+    border-color: oklch(0.6171 0.1375 39.0427);
+    background-color: var(--muted);
+    color: var(--muted-foreground);
+  }
+
+  .article-content code {
+    font-family: var(--font-mono);
+    @apply px-2 py-1 rounded text-sm;
+    background-color: var(--muted);
+  }
+
+  .article-content pre {
+    font-family: var(--font-mono);
+    @apply rounded-lg p-4 overflow-x-auto my-6;
+    background-color: oklch(0.2679 0.0036 106.6427);
+    color: oklch(0.9576 0.0027 106.4494);
+  }
+
+  .article-content pre code {
+    @apply bg-transparent p-0;
+    background-color: transparent;
+  }
+
+  .article-content img {
+    @apply rounded-lg my-6 w-full;
+  }
+
+  .article-content a {
+    color: var(--primary);
+  }
+
+  .article-content a:hover {
+    text-decoration: underline;
+  }
+}
+
+@layer utilities {
+  .prose {
+    max-width: none;
+  }
+}
