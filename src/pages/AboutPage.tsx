@@ -235,7 +235,7 @@ export function AboutPage() {
               {about.socialLinks.map((link, index) => {
                 const Icon = getSocialIcon(link.platform);
                 return (
-                  
+                  <a
                     key={index}
                     href={link.url}
                     target="_blank"
