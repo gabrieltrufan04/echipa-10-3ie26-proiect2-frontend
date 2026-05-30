@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Mail, Github, Linkedin, Twitter, Globe } from 'lucide-react';
+import { Mail, Github, Linkedin, Twitter, Globe, Users } from 'lucide-react';
 import { LoadingState } from '../components/Loading';
 import { ErrorState } from '../components/Error';
 import { fetchSingleAPI } from '../services/api';
@@ -43,6 +43,33 @@ interface AboutData {
   }[];
 }
 
+const teamMembers = [
+  {
+    name: 'Strian Romulus Vlad Filip',
+    role: 'Lider Echipă & Dezvoltator',
+    category: 'Tehnologie',
+    description: 'Pasionat de tehnologie și inteligență artificială.',
+  },
+  {
+    name: 'Trufan Gabriel',
+    role: 'Dezvoltator Frontend',
+    category: 'Sport',
+    description: 'Iubitor de sport și viață sănătoasă.',
+  },
+  {
+    name: 'Luiza Tonț',
+    role: 'Designer & Content Creator',
+    category: 'Călătorii',
+    description: 'Exploratoare de destinații europene și culturi noi.',
+  },
+  {
+    name: 'Șeitan Larisa',
+    role: 'Content Creator',
+    category: 'Cultură',
+    description: 'Entuziastă a festivalurilor și evenimentelor culturale.',
+  },
+];
+
 function renderBlock(block: Block, index: number) {
   try {
     const componentType = (block as Record<string, unknown>).__component as string;
@@ -73,10 +100,8 @@ function renderBlock(block: Block, index: number) {
         );
       }
       case 'shared.media':
-        // Ignore media blocks
         return null;
       default:
-        console.warn(`Unknown block type: ${componentType}`, block);
         return null;
     }
   } catch (err) {
@@ -94,32 +119,25 @@ export function AboutPage() {
     async function fetchAbout() {
       setLoading(true);
       setError(null);
-
       try {
         const result = await fetchSingleAPI<{ id: number; documentId: string }>({
           endpoint: 'about',
           populate: '*',
         });
-
-        console.log('API Response:', result);
-        console.log('Blocks data:', result.data);
-
         setData(result as { data: AboutData });
       } catch (err) {
-        console.error('Error fetching about page:', err);
         setError(err instanceof Error ? err : new Error('Unknown error'));
       } finally {
         setLoading(false);
       }
     }
-
     fetchAbout();
   }, []);
 
   const about = data?.data;
 
   useEffect(() => {
-    document.title = 'Despre | Blogul Meu';
+    document.title = 'Despre Echipa 10 | Blogul Meu';
   }, []);
 
   if (loading) {
@@ -151,38 +169,29 @@ export function AboutPage() {
 
   const getSocialIcon = (platform: string) => {
     switch (platform.toLowerCase()) {
-      case 'github':
-        return Github;
-      case 'linkedin':
-        return Linkedin;
-      case 'twitter':
-        return Twitter;
-      case 'email':
-        return Mail;
-      case 'website':
-        return Globe;
-      default:
-        return Globe;
+      case 'github': return Github;
+      case 'linkedin': return Linkedin;
+      case 'twitter': return Twitter;
+      case 'email': return Mail;
+      default: return Globe;
     }
   };
 
   const blocks = about.blocks || [];
 
-  console.log('Rendering blocks:', blocks);
-  console.log('About data:', about);
-
   return (
     <div className="min-h-screen bg-background pt-24">
       <div className="max-w-4xl mx-auto px-4 py-12">
+
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground font-serif mb-4">
-            {about.title || 'Despre Mine'}
+            {about.title || 'Despre Echipa 10'}
           </h1>
           <div className="w-24 h-1 bg-gradient-to-r from-primary to-primary/70 rounded mx-auto" />
         </div>
 
-        {/* Content Section - show if blocks exist */}
+        {/* Content Blocks */}
         {blocks.length > 0 ? (
           <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden p-6 md:p-8">
             {blocks.map((block, index) => renderBlock(block, index))}
@@ -193,36 +202,40 @@ export function AboutPage() {
           </div>
         )}
 
-        {/* Skills Section */}
-        {about.skills && about.skills.length > 0 && (
-          <div className="mt-8 bg-card rounded-2xl shadow-sm border border-border p-6 md:p-8">
-            <h2 className="text-2xl font-bold text-card-foreground mb-6 font-serif">
-              Abilitati & Expertiza
+        {/* Membri Echipă - adăugat de Trufan Gabriel */}
+        <div className="mt-8 bg-card rounded-2xl shadow-sm border border-border p-6 md:p-8">
+          <div className="flex items-center space-x-3 mb-6">
+            <Users className="w-6 h-6 text-primary" />
+            <h2 className="text-2xl font-bold text-card-foreground font-serif">
+              Membrii Echipei
             </h2>
-            <div className="flex flex-wrap gap-3">
-              {about.skills.map((skill, index) => (
-                <span
-                  key={index}
-                  className="px-4 py-2 bg-primary/10 text-primary rounded-lg font-medium font-sans"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
           </div>
-        )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {teamMembers.map((member, index) => (
+              <div
+                key={index}
+                className="p-4 bg-muted rounded-xl border border-border hover:border-primary/50 transition-colors"
+              >
+                <h3 className="font-bold text-foreground font-serif mb-1">{member.name}</h3>
+                <p className="text-sm text-primary font-medium font-sans mb-1">{member.role}</p>
+                <p className="text-xs text-muted-foreground font-sans mb-2">Categoria: {member.category}</p>
+                <p className="text-sm text-muted-foreground font-sans">{member.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Social Links */}
         {about.socialLinks && about.socialLinks.length > 0 && (
           <div className="mt-8 bg-card rounded-2xl shadow-sm border border-border p-6 md:p-8">
             <h2 className="text-2xl font-bold text-card-foreground mb-6 font-serif">
-              Conecteaza-te cu Mine
+              Conecteaza-te cu Noi
             </h2>
             <div className="flex flex-wrap gap-4">
               {about.socialLinks.map((link, index) => {
                 const Icon = getSocialIcon(link.platform);
                 return (
-                  <a
+                  
                     key={index}
                     href={link.url}
                     target="_blank"
@@ -237,6 +250,7 @@ export function AboutPage() {
             </div>
           </div>
         )}
+
       </div>
     </div>
   );
