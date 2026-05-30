@@ -7,25 +7,28 @@ Site de prezentare tip blog, realizat cu React & Tailwind CSS (frontend)
 ## Membri echipei și atribuții
 
 ### Strian Romulus Vlad Filip
-- Lider echipă
 - Configurare Strapi Cloud și repository GitHub
 - Generare frontend cu Bolt.new
 - Configurare Netlify și deployment
+- Rezolvare erori și debugging (articole, imagini, caching API)
 - Categoria: Tehnologie
 - Articol: Inteligența Artificială în Viața de Zi cu Zi
 
 ### Trufan Gabriel
 - Configurare VS Code și sincronizare GitHub
+- Adăugare secțiune Membrii Echipei pe pagina Despre
 - Categoria: Sport
 - Articol: Beneficiile Sportului pentru Studenți
 
 ### Luiza Tonț
 - Personalizare pagina About în Strapi
+- Adăugare statistici (număr categorii și articole) pe pagina Categorii
 - Categoria: Călătorii
 - Articol: Top 5 Destinații Europene pentru Studenți
 
 ### Șeitan Larisa
 - Testare și verificare site
+- Adăugare secțiune Newsletter pe pagina Home
 - Categoria: Cultură
 - Articol: Festivaluri Culturale din România pe care Trebuie să le Vizitezi
 
