@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Mail, CheckCircle } from 'lucide-react';
 import { useFetch } from '../hooks';
 import { ArticleCard, CategoryCard, SkeletonCard } from '../components/Card';
 import { ErrorState } from '../components/Error';
@@ -9,6 +9,9 @@ import { fetchAPI } from '../services/api';
 const HERO_IMAGE = 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260';
 
 export function HomePage() {
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
   const { data: articlesData, loading: articlesLoading, error: articlesError, refetch: refetchArticles } = useFetch(() =>
     fetchAPI<{ id: number; documentId: string }[]>({
       endpoint: 'articles',
@@ -47,13 +50,21 @@ export function HomePage() {
     document.documentElement.classList.add('dark');
   }, []);
 
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) {
+      setSubscribed(true);
+      setEmail('');
+    }
+  };
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${HERO_IMAGE})` }}
+          style={{ backgroundImage: url(${HERO_IMAGE}) }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-background/90 via-background/70 to-transparent" />
         </div>
@@ -194,6 +205,47 @@ export function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Newsletter - adăugat de Șeitan Larisa */}
+      <section className="py-16 bg-background">
+        <div className="max-w-2xl mx-auto px-4 text-center">
+          <div className="bg-card rounded-2xl border border-border p-8 md:p-12">
+            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Mail className="w-6 h-6 text-primary" />
+            </div>
+            <h2 className="text-3xl font-bold text-foreground font-serif mb-3">
+              Aboneaza-te la Newsletter
+            </h2>
+            <p className="text-muted-foreground font-sans mb-6">
+              Primeste cele mai noi articole direct in inbox-ul tau. Fara spam, doar continut de calitate.
+            </p>
+            {subscribed ? (
+              <div className="flex items-center justify-center space-x-2 text-primary">
+                <CheckCircle className="w-5 h-5" />
+                <span className="font-medium font-sans">Multumim! Te-ai abonat cu succes.</span>
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="adresa@email.ro"
+                  required
+                  className="flex-1 px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground font-sans focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+                <button
+                  type="submit"
+                  className="px-6 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-medium font-sans transition-colors whitespace-nowrap"
+                >
+                  Aboneaza-te
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
