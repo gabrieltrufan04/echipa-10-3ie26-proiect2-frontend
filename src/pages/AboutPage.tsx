@@ -167,16 +167,6 @@ export function AboutPage() {
     );
   }
 
-  const getSocialIcon = (platform: string) => {
-    switch (platform.toLowerCase()) {
-      case 'github': return Github;
-      case 'linkedin': return Linkedin;
-      case 'twitter': return Twitter;
-      case 'email': return Mail;
-      default: return Globe;
-    }
-  };
-
   const blocks = about.blocks || [];
 
   return (
@@ -202,7 +192,7 @@ export function AboutPage() {
           </div>
         )}
 
-        {/* Membri Echipă - adăugat de Trufan Gabriel */}
+        {/* Membri Echipă */}
         <div className="mt-8 bg-card rounded-2xl shadow-sm border border-border p-6 md:p-8">
           <div className="flex items-center space-x-3 mb-6">
             <Users className="w-6 h-6 text-primary" />
@@ -224,32 +214,6 @@ export function AboutPage() {
             ))}
           </div>
         </div>
-
-        {/* Social Links */}
-        {about.socialLinks && about.socialLinks.length > 0 && (
-          <div className="mt-8 bg-card rounded-2xl shadow-sm border border-border p-6 md:p-8">
-            <h2 className="text-2xl font-bold text-card-foreground mb-6 font-serif">
-              Conecteaza-te cu Noi
-            </h2>
-            <div className="flex flex-wrap gap-4">
-              {about.socialLinks.map((link, index) => {
-                const Icon = getSocialIcon(link.platform);
-                return (
-                  
-                    key={index}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center space-x-2 px-4 py-3 bg-muted rounded-lg text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors font-sans"
-                  >
-                    <Icon className="w-5 h-5" />
-                    <span className="font-medium">{link.platform}</span>
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-        )}
 
       </div>
     </div>
